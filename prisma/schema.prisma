@@ -24,6 +24,7 @@ model User {
   sessions      Session[]
   accounts      Account[]
   projects      Project[]
+  files         File[]
 
   @@unique([email])
   @@map("user")
@@ -84,7 +85,23 @@ model Project {
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  files     File[]
 
   @@index([userId])
   @@map("project")
+}
+
+model File {
+  id        String   @id @default(uuid())
+  name      String
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  projectId String
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@index([projectId])
+  @@map("file")
 }
