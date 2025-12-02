@@ -10,4 +10,15 @@ export const auth = betterAuth({
     provider: "postgresql",
   }),
   plugins: [nextCookies()],
+  emailAndPassword: {
+    enabled: true,
+    // async sendResetPassword(data, request) {
+    //   // Send an email to the user with a link to reset their password
+    // },
+  },
+  advanced: {
+    database: {
+      generateId: "uuid",
+    },
+  },
 });
